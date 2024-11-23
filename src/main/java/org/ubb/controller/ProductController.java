@@ -1,13 +1,18 @@
 package org.ubb.controller;
 
+import org.ubb.domain.Product;
 import org.ubb.service.ProductService;
 import org.ubb.view.View;
 import org.ubb.view.ViewMenuItems;
+
+import java.util.List;
 
 public class ProductController {
 
     private final View view;
     private final ProductService productService;
+
+    private List<Product> productList;
 
     public ProductController(View view, ProductService productService) {
         this.view = view;
@@ -18,9 +23,8 @@ public class ProductController {
         try {
             switch (selectedItem) {
                 case PRINT_ALL:
-                    productService.printAll().forEach(
-                            System.out::println
-                    );
+                    productList = productService.fetchAll();
+                    productList.forEach(System.out::println);
                     break;
                 case ADD:
                     String name = selectedItem.getParams()[0];
@@ -31,6 +35,11 @@ public class ProductController {
                 case DELETE:
                     Long id = Long.parseLong(selectedItem.getParams()[0]);
                     productService.deleteProductById(id);
+                    break;
+                case FILTER:
+                    String attributeName = selectedItem.getParams()[0];
+                    String attributeValue = selectedItem.getParams()[1];
+                    productList = productService.filer(productList, attributeName, attributeValue);
                     break;
 
             }

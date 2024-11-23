@@ -15,7 +15,7 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> printAll() {
+    public List<Product> fetchAll() {
         return StreamSupport.stream(productRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
     }
@@ -33,5 +33,10 @@ public class ProductService {
 
     public void deleteProductById(Long id) {
         productRepository.delete(id);
+    }
+
+    public List<Product> filer(List<Product> productList, String attributeName, String attributeValue) {
+
+        return null;
     }
 }
