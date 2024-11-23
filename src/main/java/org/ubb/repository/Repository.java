@@ -2,9 +2,7 @@ package org.ubb.repository;
 
 import org.ubb.domain.Product;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Optional;
 
 public class Repository implements IRepository<Long, Product>{
@@ -32,6 +30,27 @@ public class Repository implements IRepository<Long, Product>{
 
     @Override
     public Iterable<Product> findAll() {
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection(url, user, passwor);
+            String sql = "SELECT * FROM products";
+            PreparedStatement preparedStatement =  connection.prepareStatement(sql);
+            ResultSet resultSet =  preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Long id = resultSet.getLong("id");
+                String name = resultSet.getString("name");
+                String brand = resultSet.getString("brand");
+                String availability = resultSet.getString("availability");
+                Product newProduct = new  Product(id, name, brand, availability);
+
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         return null;
     }
 

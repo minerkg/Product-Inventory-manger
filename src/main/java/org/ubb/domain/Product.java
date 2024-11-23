@@ -40,7 +40,7 @@ public class Product extends BaseEntity<Long>{
         this.name = name;
     }
 
-    public Product(Long id, String brand, String availability, String name) {
+    public Product(Long id, String name, String brand, String availability) {
         this.id = id;
         this.brand = brand;
         this.availability = availability;
