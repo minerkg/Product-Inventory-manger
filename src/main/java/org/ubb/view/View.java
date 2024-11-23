@@ -17,9 +17,11 @@ public class View {
                 .map(ViewMenuItems::getLabel)
                 .forEach(System.out::println);
 
+        String command = scanner.next();
 
-        ViewMenuItems selectedOption = ViewMenuItems.values()[scanner.nextInt() - 1];
-        return selectedOption;
+        //ViewMenuItems selectedOption = ViewMenuItems.values()[scanner.nextInt() - 1];
+
+        return ViewMenuItems.valueOf(command.toUpperCase());
 
     }
 
