@@ -4,6 +4,7 @@ public class Product extends BaseEntity<Long>{
 
 
     private Long id;
+    private String name;
     private String brand;
     private String availability;
 
@@ -31,9 +32,18 @@ public class Product extends BaseEntity<Long>{
         this.availability = availability;
     }
 
-    public Product(Long id, String brand, String availability) {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Product(Long id, String brand, String availability, String name) {
         this.id = id;
         this.brand = brand;
         this.availability = availability;
+        this.name = name;
     }
 }
