@@ -25,8 +25,10 @@ public class View {
         List<String> parameters = Arrays.asList(commandAndParams.split("\\s+"));
         parameters.remove(0);
 
+        ViewMenuItems selectedItem = ViewMenuItems.valueOf(command.toUpperCase());
+        selectedItem.setParams(parameters);
 
-        return ViewMenuItems.valueOf(command.toUpperCase());
+        return selectedItem;
 
     }
 
