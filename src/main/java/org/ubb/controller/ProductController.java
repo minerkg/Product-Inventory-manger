@@ -5,6 +5,7 @@ import org.ubb.service.ProductService;
 import org.ubb.view.View;
 import org.ubb.view.ViewMenuItems;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductController {
@@ -17,13 +18,16 @@ public class ProductController {
     public ProductController(View view, ProductService productService) {
         this.view = view;
         this.productService = productService;
+        productList = new ArrayList<Product>();
     }
 
     public void selectedOption(ViewMenuItems selectedItem) {
         try {
             switch (selectedItem) {
                 case PRINT_ALL:
-                    productList = productService.fetchAll();
+                    if (productList.isEmpty()) {
+                        productList = productService.fetchAll();
+                    }
                     productList.forEach(System.out::println);
                     break;
                 case ADD:
@@ -37,6 +41,9 @@ public class ProductController {
                     productService.deleteProductById(id);
                     break;
                 case FILTER:
+                    if (productList.isEmpty()) {
+                        productList = productService.fetchAll();
+                    }
                     String attributeName = selectedItem.getParams()[0];
                     String attributeValue = selectedItem.getParams()[1];
                     productList = productService.filer(productList, attributeName, attributeValue);
