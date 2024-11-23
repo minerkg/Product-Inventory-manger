@@ -17,6 +17,7 @@ public class Main {
         ViewMenuItems selectedItem = ViewMenuItems.PRINT_ALL;
         while (selectedItem != ViewMenuItems.EXIT) {
             selectedItem = view.runMenu();
+            System.out.println(selectedItem);
             productController.selectedOption(selectedItem);
         }
 

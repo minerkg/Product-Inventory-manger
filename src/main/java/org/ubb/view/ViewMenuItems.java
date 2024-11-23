@@ -2,7 +2,7 @@ package org.ubb.view;
 
 public enum ViewMenuItems {
 
-    PRINT_ALL("print-all", 1),
+    PRINT_ALL("print_all", 1),
     ADD("add", 2),
     DELETE("delete", 3),
     FILTER("filter", 4),
