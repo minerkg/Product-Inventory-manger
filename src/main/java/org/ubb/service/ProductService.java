@@ -61,15 +61,18 @@ public class ProductService {
                 break;
             case "availability":
                 productFilter = p -> p.getAvailability().equals(attributeValue);
+                List<Predicate<Product>> availabilityFilters = filtersAppliedByType.get(FilterType.AVAILABILITY);
+                availabilityFilters.add(productFilter);
+                filtersAppliedByType.put(FilterType.AVAILABILITY, availabilityFilters);
                 break;
             default:
                 productFilter = p -> true;
         }
 
-        filtersApplied.add(productFilter);
-
         return this.fetchAll().stream()
-                .filter(filtersApplied.stream().reduce(p -> false, Predicate::or))
+                .filter(filtersAppliedByType.get(FilterType.NAME).stream().reduce(p -> false, Predicate::or)
+                        .and(filtersAppliedByType.get(FilterType.BRAND).stream().reduce(p -> false, Predicate::or))
+                        .and(filtersAppliedByType.get(FilterType.AVAILABILITY).stream().reduce(p -> false, Predicate::or)))
                 .collect(Collectors.toList());
 
     }
