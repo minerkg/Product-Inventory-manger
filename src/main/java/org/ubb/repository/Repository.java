@@ -4,15 +4,23 @@ import org.ubb.domain.Product;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Optional;
 
 public class Repository implements IRepository<Long, Product>{
 
     private final Connection connection;
+    private String url = "jdbc:postgresql://localhost:5432/products-java-app";
+    private String user = "postgres";
+    private String passwor = System.clearProperty("postgres_pass");
 
 
     public Repository() {
-        this.connection = DriverManager.getConnection();
+        try {
+            this.connection = DriverManager.getConnection(url, user, passwor);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
