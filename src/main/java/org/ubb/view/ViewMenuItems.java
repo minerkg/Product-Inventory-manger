@@ -1,5 +1,7 @@
 package org.ubb.view;
 
+import java.util.List;
+
 public enum ViewMenuItems {
 
     PRINT_ALL("print_all", 1),
@@ -10,6 +12,7 @@ public enum ViewMenuItems {
     EXIT("exit", 6);
 
 
+    private List<String> params;
     private final String label;
     private final int id;
 
@@ -20,5 +23,13 @@ public enum ViewMenuItems {
 
     public String getLabel() {
         return "-- " + this.id + ". " + this.label;
+    }
+
+    public List<String> getParams() {
+        return params;
+    }
+
+    public void setParams(List<String> params) {
+        this.params = params;
     }
 }
