@@ -21,17 +21,15 @@ public class View {
                 .forEach(System.out::println);
 
         String commandAndParams = scanner.nextLine();
-        System.out.println(commandAndParams);
-
         String command = commandAndParams.split("\\s+")[0];
-
-        String[] params = commandAndParams.split("\\s+");
-        String[] parameters = new String[params.length-1];
-        for (int i=1; i < params.length; i++)
-           parameters[i - 1] = params[i];
-
         ViewMenuItems selectedItem = ViewMenuItems.valueOf(command.toUpperCase());
-        selectedItem.setParams(parameters);
+
+        if (commandAndParams.split("\\s+").length > 1) {
+            String params = commandAndParams.split("\\s+")[1];
+            String[] parameters = params.split(",");
+
+            selectedItem.setParams(parameters);
+        }
 
         return selectedItem;
 

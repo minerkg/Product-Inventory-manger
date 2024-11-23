@@ -29,8 +29,8 @@ public class ProductController {
                 case ADD:
 
                     String name = selectedItem.getParams()[0];
-                    String brand = selectedItem.getParams()[0];
-                    String availability = selectedItem.getParams()[0];
+                    String brand = selectedItem.getParams()[1];
+                    String availability = selectedItem.getParams()[2];
                     productService.addProduct(name, brand, availability);
                     break;
 
