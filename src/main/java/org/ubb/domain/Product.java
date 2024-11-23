@@ -5,7 +5,17 @@ public class Product {
 
     private Long id;
     private String brand;
+    private String name;
     private String availability;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 
     public Long getId() {
         return id;
@@ -31,9 +41,10 @@ public class Product {
         this.availability = availability;
     }
 
-    public Product(Long id, String brand, String availability) {
+    public Product(Long id, String brand, String name, String availability) {
         this.id = id;
         this.brand = brand;
         this.availability = availability;
+        this.name = name;
     }
 }
