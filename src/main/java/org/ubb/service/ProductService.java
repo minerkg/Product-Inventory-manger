@@ -4,7 +4,9 @@ import org.ubb.domain.Product;
 import org.ubb.repository.IRepository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -14,10 +16,12 @@ public class ProductService {
     private final IRepository<Long, Product> productRepository;
 
     private List<Predicate<Product>> filtersApplied;
+    private Map<FilterType, List<Predicate<Product>>> filtersAppliedByType;
 
     public ProductService(IRepository<Long, Product> productRepository) {
         this.productRepository = productRepository;
         filtersApplied = new ArrayList<>();
+        filtersAppliedByType = new HashMap<>();
     }
 
     public List<Product> fetchAll() {
@@ -45,9 +49,15 @@ public class ProductService {
         switch (attributeName) {
             case "name":
                 productFilter = p -> p.getName().equals(attributeValue);
+                List<Predicate<Product>> nameFilters = filtersAppliedByType.get(FilterType.NAME);
+                nameFilters.add(productFilter);
+                filtersAppliedByType.put(FilterType.NAME, nameFilters);
                 break;
             case "brand":
                 productFilter = p -> p.getBrand().equals(attributeValue);
+                List<Predicate<Product>> brandFilters = filtersAppliedByType.get(FilterType.BRAND);
+                brandFilters.add(productFilter);
+                filtersAppliedByType.put(FilterType.BRAND, brandFilters);
                 break;
             case "availability":
                 productFilter = p -> p.getAvailability().equals(attributeValue);
@@ -55,6 +65,7 @@ public class ProductService {
             default:
                 productFilter = p -> true;
         }
+
         filtersApplied.add(productFilter);
 
         return this.fetchAll().stream()
