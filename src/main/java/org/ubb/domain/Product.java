@@ -53,7 +53,7 @@ public class Product extends BaseEntity<Long>{
     @Override
     public String toString() {
         return "Product{" +
-                "id=" + id +
+                "id=" + super.getId() +
                 ", name='" + name + '\'' +
                 ", brand='" + brand + '\'' +
                 ", availability='" + availability + '\'' +
