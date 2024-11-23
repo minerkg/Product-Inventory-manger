@@ -58,7 +58,7 @@ public class ProductService {
         filtersApplied.add(productFilter);
 
         return this.fetchAll().stream()
-                .filter(filtersApplied.stream().reduce(p -> true, Predicate::or))
+                .filter(filtersApplied.stream().reduce(p -> false, Predicate::or))
                 .collect(Collectors.toList());
 
     }
