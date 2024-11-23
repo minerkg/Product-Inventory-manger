@@ -11,11 +11,13 @@ public class Repository implements IRepository<Long, Product>{
 
     private final Connection connection;
     private String url = "jdbc:postgresql://localhost:5432/products-java-app";
+
     private String user = "postgres";
-    private String passwor = System.clearProperty("postgres_pass");
+    private String passwor = System.getenv("postgres_pass");
 
 
     public Repository() {
+
         try {
             this.connection = DriverManager.getConnection(url, user, passwor);
         } catch (SQLException e) {
