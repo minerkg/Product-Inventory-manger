@@ -65,12 +65,14 @@ public class Repository implements IRepository<Long, Product> {
             connection = DriverManager.getConnection(url, user, passwor);
             String sql = "INSERT INTO products (name ,brand , availability) VALUES (?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, entity.getName());
+            preparedStatement.setString(2, entity.getBrand());
+            preparedStatement.setString(3, entity.getAvailability());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return Optional.empty();
     }
 
