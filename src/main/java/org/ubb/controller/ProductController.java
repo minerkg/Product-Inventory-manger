@@ -52,6 +52,7 @@ public class ProductController {
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
 
 
