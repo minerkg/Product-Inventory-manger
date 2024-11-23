@@ -1,12 +1,8 @@
 package org.ubb.controller;
 
-import org.ubb.domain.Product;
-import org.ubb.repository.IRepository;
 import org.ubb.service.ProductService;
 import org.ubb.view.View;
 import org.ubb.view.ViewMenuItems;
-
-import java.util.InputMismatchException;
 
 public class ProductController {
 
@@ -27,11 +23,14 @@ public class ProductController {
                     );
                     break;
                 case ADD:
-
                     String name = selectedItem.getParams()[0];
                     String brand = selectedItem.getParams()[1];
                     String availability = selectedItem.getParams()[2];
                     productService.addProduct(name, brand, availability);
+                    break;
+                case DELETE:
+                    Long id = Long.parseLong(selectedItem.getParams()[0]);
+                    productService.deleteProductById(id);
                     break;
 
             }

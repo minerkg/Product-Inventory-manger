@@ -77,7 +77,18 @@ public class Repository implements IRepository<Long, Product> {
     }
 
     @Override
-    public Optional<Product> delete(Long aLong) {
+    public Optional<Product> delete(Long productId) {
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection(url, user, passwor);
+            String sql = "DELETE FROM products WHERE id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, productId);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return Optional.empty();
     }
 
