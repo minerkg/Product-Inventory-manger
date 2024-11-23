@@ -2,10 +2,18 @@ package org.ubb.repository;
 
 import org.ubb.domain.Product;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.Optional;
 
 public class Repository implements IRepository<Long, Product>{
 
+    private final Connection connection;
+
+
+    public Repository() {
+        this.connection = DriverManager.getConnection();
+    }
 
     @Override
     public Optional<Product> findOne(Long aLong) {
