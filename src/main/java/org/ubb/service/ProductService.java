@@ -4,6 +4,7 @@ import org.ubb.domain.Product;
 import org.ubb.repository.IRepository;
 
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -20,7 +21,7 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public void addProduct( String productName, String brand, String availability) {
+    public void addProduct(String productName, String brand, String availability) {
         Product newProduct = new Product(productName, brand, availability);
         try {
             productRepository.save(newProduct);
@@ -36,7 +37,23 @@ public class ProductService {
     }
 
     public List<Product> filer(List<Product> productList, String attributeName, String attributeValue) {
+        Predicate<Product> productFilter;
+        switch (attributeName) {
+            case "name":
+                productFilter = p -> p.getName().equals(attributeValue);
+                break;
+            case "brand":
+                productFilter = p -> p.getBrand().equals(attributeValue);
+                break;
+            case "availability":
+                productFilter = p -> p.getAvailability().equals(attributeValue);
+                break;
+            default:
+                productFilter = p -> true;
+        }
+        return productList.stream()
+                .filter(productFilter)
+                .collect(Collectors.toList());
 
-        return null;
     }
 }
