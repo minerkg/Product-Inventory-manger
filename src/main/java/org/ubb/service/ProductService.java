@@ -84,4 +84,14 @@ public class ProductService {
                 .collect(Collectors.toList());
 
     }
+
+    public void resetFilters() {
+        List<Predicate<Product>> nameFilters = new ArrayList<>();
+        List<Predicate<Product>> brandFilters = new ArrayList<>();
+        List<Predicate<Product>> availabilityFilters = new ArrayList<>();
+        filtersAppliedByType.put(FilterType.NAME, nameFilters);
+        filtersAppliedByType.put(FilterType.BRAND, brandFilters);
+        filtersAppliedByType.put(FilterType.AVAILABILITY, availabilityFilters);
+
+    }
 }

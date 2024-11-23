@@ -18,7 +18,7 @@ public class ProductController {
     public ProductController(View view, ProductService productService) {
         this.view = view;
         this.productService = productService;
-        productList = new ArrayList<Product>();
+        productList = new ArrayList<>();
     }
 
     public void selectedOption(ViewMenuItems selectedItem) {
@@ -47,6 +47,10 @@ public class ProductController {
                     String attributeName = selectedItem.getParams()[0];
                     String attributeValue = selectedItem.getParams()[1];
                     productList = productService.filer(attributeName, attributeValue);
+                    break;
+                case REMOVE:
+                    productService.resetFilters();
+                    productList = productService.fetchAll();
                     break;
 
             }
