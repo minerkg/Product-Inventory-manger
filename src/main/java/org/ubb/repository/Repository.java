@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Repository implements IRepository<Long, Product>{
+public class Repository implements IRepository<Long, Product> {
 
     private final Connection connection;
     private String url = "jdbc:postgresql://localhost:5432/products-java-app";
@@ -37,8 +37,8 @@ public class Repository implements IRepository<Long, Product>{
         try {
             connection = DriverManager.getConnection(url, user, passwor);
             String sql = "SELECT * FROM products";
-            PreparedStatement preparedStatement =  connection.prepareStatement(sql);
-            ResultSet resultSet =  preparedStatement.executeQuery();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
 
             while (resultSet.next()) {
@@ -46,7 +46,7 @@ public class Repository implements IRepository<Long, Product>{
                 String name = resultSet.getString("name");
                 String brand = resultSet.getString("brand");
                 String availability = resultSet.getString("availability");
-                Product newProduct = new  Product(id, name, brand, availability);
+                Product newProduct = new Product(id, name, brand, availability);
                 productList.add(newProduct);
             }
 
@@ -60,6 +60,17 @@ public class Repository implements IRepository<Long, Product>{
 
     @Override
     public Optional<Product> save(Product entity) throws Exception {
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection(url, user, passwor);
+            String sql = "INSERT INTO products (name ,brand , availability) VALUES (?, ?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         return Optional.empty();
     }
 

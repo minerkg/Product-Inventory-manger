@@ -20,5 +20,15 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    public void addProduct( String productName, String brand, String availability) {
+        Product newProduct = new Product(productName, brand, availability);
+        try {
+            productRepository.save(newProduct);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
 
 }

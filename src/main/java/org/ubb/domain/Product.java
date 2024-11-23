@@ -50,6 +50,13 @@ public class Product extends BaseEntity<Long>{
         this.name = name;
     }
 
+    public Product(String name, String brand, String availability) {
+        this.brand = brand;
+        this.availability = availability;
+        this.name = name;
+    }
+
+
     @Override
     public String toString() {
         return "Product{" +
