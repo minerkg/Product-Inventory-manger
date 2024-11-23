@@ -22,7 +22,9 @@ public class ProductController {
         try {
             switch (selectedItem) {
                 case PRINT_ALL:
-
+                    productService.printAll().forEach(
+                            System.out::println
+                    );
                     break;
 
             }

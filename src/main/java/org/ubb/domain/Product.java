@@ -41,9 +41,19 @@ public class Product extends BaseEntity<Long>{
     }
 
     public Product(Long id, String name, String brand, String availability) {
-        this.id = id;
+        super.setId(id);
         this.brand = brand;
         this.availability = availability;
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", brand='" + brand + '\'' +
+                ", availability='" + availability + '\'' +
+                '}';
     }
 }
