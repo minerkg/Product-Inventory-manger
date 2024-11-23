@@ -16,7 +16,7 @@ public class ProductController {
     public void selectedOption(ViewMenuItems selectedItem) {
         try {
             switch (selectedItem) {
-                case ViewMenuItems.PRINT_ALL:
+                case PRINT_ALL:
                     System.out.println("you selected print");
                     break;
 
