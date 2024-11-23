@@ -12,7 +12,7 @@ public enum ViewMenuItems {
     EXIT("exit", 6);
 
 
-    private List<String> params;
+    private String[] params;
     private final String label;
     private final int id;
 
@@ -25,11 +25,11 @@ public enum ViewMenuItems {
         return "-- " + this.id + ". " + this.label;
     }
 
-    public List<String> getParams() {
+    public String[] getParams() {
         return params;
     }
 
-    public void setParams(List<String> params) {
+    public void setParams(String[] params) {
         this.params = params;
     }
 }

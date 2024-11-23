@@ -26,6 +26,13 @@ public class ProductController {
                             System.out::println
                     );
                     break;
+                case ADD:
+
+                    String name = selectedItem.getParams()[0];
+                    String brand = selectedItem.getParams()[0];
+                    String availability = selectedItem.getParams()[0];
+                    productService.addProduct(name, brand, availability);
+                    break;
 
             }
         } catch (Exception ex) {

@@ -24,11 +24,11 @@ public class View {
         System.out.println(commandAndParams);
 
         String command = commandAndParams.split("\\s+")[0];
-        List<String> parameters = new ArrayList<>();
 
         String[] params = commandAndParams.split("\\s+");
+        String[] parameters = new String[params.length-1];
         for (int i=1; i < params.length; i++)
-            parameters.add(params[i]);
+           parameters[i - 1] = params[i];
 
         ViewMenuItems selectedItem = ViewMenuItems.valueOf(command.toUpperCase());
         selectedItem.setParams(parameters);
