@@ -77,10 +77,11 @@ public class ProductService {
 
         }
 
+
         return this.fetchAll().stream()
-                .filter(filtersAppliedByType.get(FilterType.NAME).stream().reduce(p -> false, Predicate::or))
-              //  .filter(filtersAppliedByType.get(FilterType.BRAND).stream().reduce(p -> false, Predicate::or))
-               // .filter(filtersAppliedByType.get(FilterType.AVAILABILITY).stream().reduce(p -> false, Predicate::or))
+                .filter(filtersAppliedByType.get(FilterType.NAME).stream().reduce(p -> false, Predicate::or)
+                        .and(filtersAppliedByType.get(FilterType.BRAND).stream().reduce(p -> false, Predicate::or))
+                        .and(filtersAppliedByType.get(FilterType.AVAILABILITY).stream().reduce(p -> false, Predicate::or)))
                 .collect(Collectors.toList());
 
     }
@@ -93,5 +94,28 @@ public class ProductService {
         filtersAppliedByType.put(FilterType.BRAND, brandFilters);
         filtersAppliedByType.put(FilterType.AVAILABILITY, availabilityFilters);
 
+    }
+
+    private Predicate<Product> combineFilters(Map<FilterType, List<Predicate<Product>>> filterMap) {
+        Map<FilterType, List<Predicate<Product>>> finalFilterMap = new HashMap<>();
+        filterMap.keySet().forEach(key -> {
+            if (!filterMap.get(key).isEmpty()) {
+                finalFilterMap.put(key, filterMap.get(key));
+            }
+        });
+
+        return finalFilterMap.values().stream()
+                .map(valueList -> {
+                    if (!valueList.isEmpty()) {
+                        return valueList.stream().reduce(p -> false, Predicate::or);
+                    }
+                    return true;
+                })
+
+
+
+        return filtersAppliedByType.get(FilterType.NAME).stream().reduce(p -> false, Predicate::or)
+                .and(filtersAppliedByType.get(FilterType.BRAND).stream().reduce(p -> false, Predicate::or))
+                .and(filtersAppliedByType.get(FilterType.AVAILABILITY).stream().reduce(p -> false, Predicate::or));
     }
 }
