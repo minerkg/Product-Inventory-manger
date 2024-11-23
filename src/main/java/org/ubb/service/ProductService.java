@@ -3,6 +3,7 @@ package org.ubb.service;
 import org.ubb.domain.Product;
 import org.ubb.repository.IRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -12,8 +13,11 @@ public class ProductService {
 
     private final IRepository<Long, Product> productRepository;
 
+    private List<Predicate<Product>> filtersApplied;
+
     public ProductService(IRepository<Long, Product> productRepository) {
         this.productRepository = productRepository;
+        filtersApplied = new ArrayList<>();
     }
 
     public List<Product> fetchAll() {
@@ -36,7 +40,7 @@ public class ProductService {
         productRepository.delete(id);
     }
 
-    public List<Product> filer(List<Product> productList, String attributeName, String attributeValue) {
+    public List<Product> filer(String attributeName, String attributeValue) {
         Predicate<Product> productFilter;
         switch (attributeName) {
             case "name":
@@ -51,8 +55,10 @@ public class ProductService {
             default:
                 productFilter = p -> true;
         }
-        return productList.stream()
-                .filter(productFilter)
+        filtersApplied.add(productFilter);
+
+        return this.fetchAll().stream()
+                .filter(filtersApplied.stream().reduce(p -> true, Predicate::or))
                 .collect(Collectors.toList());
 
     }

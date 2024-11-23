@@ -46,7 +46,7 @@ public class ProductController {
                     }
                     String attributeName = selectedItem.getParams()[0];
                     String attributeValue = selectedItem.getParams()[1];
-                    productList = productService.filer(productList, attributeName, attributeValue);
+                    productList = productService.filer(attributeName, attributeValue);
                     break;
 
             }
