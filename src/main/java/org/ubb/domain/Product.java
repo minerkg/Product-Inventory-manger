@@ -1,6 +1,6 @@
 package org.ubb.domain;
 
-public class Product {
+public class Product extends BaseEntity<Long>{
 
 
     private Long id;
