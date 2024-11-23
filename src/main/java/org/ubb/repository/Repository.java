@@ -3,6 +3,8 @@ package org.ubb.repository;
 import org.ubb.domain.Product;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class Repository implements IRepository<Long, Product>{
@@ -31,11 +33,13 @@ public class Repository implements IRepository<Long, Product>{
     @Override
     public Iterable<Product> findAll() {
         Connection connection = null;
+        List<Product> productList = new ArrayList<>();
         try {
             connection = DriverManager.getConnection(url, user, passwor);
             String sql = "SELECT * FROM products";
             PreparedStatement preparedStatement =  connection.prepareStatement(sql);
             ResultSet resultSet =  preparedStatement.executeQuery();
+
 
             while (resultSet.next()) {
                 Long id = resultSet.getLong("id");
@@ -43,7 +47,7 @@ public class Repository implements IRepository<Long, Product>{
                 String brand = resultSet.getString("brand");
                 String availability = resultSet.getString("availability");
                 Product newProduct = new  Product(id, name, brand, availability);
-
+                productList.add(newProduct);
             }
 
 
@@ -51,7 +55,7 @@ public class Repository implements IRepository<Long, Product>{
             throw new RuntimeException(e);
         }
 
-        return null;
+        return productList;
     }
 
     @Override
