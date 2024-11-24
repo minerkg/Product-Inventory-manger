@@ -1,6 +1,6 @@
 package org.ubb.service;
 
-public enum FilterBy {
+public enum FilterType {
     NAME,
     BRAND,
     AVAILABILITY
