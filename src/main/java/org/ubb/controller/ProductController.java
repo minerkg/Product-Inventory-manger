@@ -51,6 +51,7 @@ public class ProductController {
                 case REMOVE:
                     productService.resetFilters();
                     productList = productService.fetchAll();
+
                     break;
 
             }
